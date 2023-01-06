@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">E-Store</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="find_your_gadget">Find your \nGadget</string>
+    <string name="get_started">Get Started</string>
+    <string name="welcome_nback">Welcome\nBack</string>
+    <string name="login">Login</string>
+    <string name="enter_email">enter email</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="enter_your_password">enter your password</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="login_btn">Login</string>
+    <string name="create_account">Create account</string>
+    <string name="minus">-</string>
+    <string name="search">Search</string>
+    <string name="order_online_collect_in_store">Order online \ncollect in store</string>
+    <string name="plus">+</string>
 </resources>

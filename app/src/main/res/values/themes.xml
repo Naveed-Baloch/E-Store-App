@@ -5,6 +5,7 @@
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryVariant">@color/primaryLightColor</item>
         <item name="colorOnPrimary">@color/white</item>
+        <item name="backgroundColor">@color/backgroundColor</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/primaryColor</item>
         <item name="colorSecondaryVariant">@color/primaryLightColor</item>
@@ -12,5 +13,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <!-- Rounded Shape -->
+        <item name="cornerSize">50%</item>
     </style>
 </resources>

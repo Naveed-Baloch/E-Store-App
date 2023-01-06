@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="130dp"
+    android:background="@drawable/bg_product_item_white"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/cartProductImage"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/product_image" />
+
+    <TextView
+        android:id="@+id/carProductTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="20dp"
+        android:fontFamily="@font/rale_way_bold"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/cartProductPrice"
+        app:layout_constraintStart_toEndOf="@id/cartProductImage"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Series 6. Red" />
+
+    <TextView
+        android:id="@+id/cartProductPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/rale_way_bold"
+        android:textAlignment="center"
+        android:textColor="@color/primaryColor"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/cartProductQty"
+        app:layout_constraintStart_toStartOf="@id/carProductTitle"
+        app:layout_constraintTop_toBottomOf="@+id/carProductTitle"
+        tools:text="$ 230" />
+
+    <TextView
+        android:id="@+id/cartProductQtyText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/rale_way_regular"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/cartProductPrice"
+        app:layout_constraintTop_toBottomOf="@+id/cartProductPrice"
+        tools:text="Quantity" />
+
+    <TextView
+        android:id="@+id/cartProductQtyMinusBtn"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:background="@drawable/bg_rounded_blue_light_btn"
+        android:fontFamily="@font/rale_way_bold"
+        android:text="@string/minus"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:layout_margin="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/cartProductQtyText"
+        app:layout_constraintTop_toBottomOf="@id/cartProductPrice" />
+
+    <TextView
+        android:id="@+id/cartProductQty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/rale_way_bold"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:layout_margin="5dp"
+        app:layout_constraintStart_toEndOf="@id/cartProductQtyMinusBtn"
+        app:layout_constraintEnd_toStartOf="@id/cartProductQtyPlusBtn"
+        app:layout_constraintTop_toBottomOf="@+id/cartProductPrice"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:text="1" />
+
+    <TextView
+        android:id="@+id/cartProductQtyPlusBtn"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:background="@drawable/bg_rounded_blue_light_btn"
+        android:fontFamily="@font/rale_way_bold"
+        android:text="@string/plus"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:layout_margin="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/cartProductQty"
+        app:layout_constraintTop_toBottomOf="@id/cartProductPrice" />
+</androidx.constraintlayout.widget.ConstraintLayout>
