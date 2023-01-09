@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/emptyScreenImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/emptyScreenTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:src="@drawable/empty_results" />
+
+    <TextView
+        android:id="@+id/emptyScreenTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/rale_way_semi_bold"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="28sp"
+        android:maxWidth="300dp"
+        app:layout_constraintBottom_toTopOf="@+id/emptyScreenDesc"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emptyScreenImage"
+        tools:text="No favourite yet" />
+
+    <TextView
+        android:id="@+id/emptyScreenDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/rale_way_regular"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="17sp"
+        android:maxWidth="300dp"
+        android:layout_marginVertical="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/emptyScreenBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emptyScreenTitle"
+        tools:text="Hit the orange button down below to Create an order" />
+
+    <RelativeLayout
+        android:id="@+id/emptyScreenBtn"
+        android:layout_width="300dp"
+        android:layout_height="70dp"
+        android:background="@drawable/bg_rounded_blue_light_empty_btn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emptyScreenDesc">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/rale_way_bold"
+            android:text="@string/login"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

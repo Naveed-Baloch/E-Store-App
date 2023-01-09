@@ -11,9 +11,14 @@
         <item name="colorSecondaryVariant">@color/primaryLightColor</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">?attr/colorPrimary</item>
         <!-- Customize your theme here. -->
         <!-- Rounded Shape -->
         <item name="cornerSize">50%</item>
+    </style>
+    <style name="TabLayoutTextStyle">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:fontFamily">@font/rale_way_bold</item>
     </style>
 </resources>

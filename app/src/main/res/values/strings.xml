@@ -17,4 +17,11 @@
     <string name="search">Search</string>
     <string name="order_online_collect_in_store">Order online \ncollect in store</string>
     <string name="plus">+</string>
+    <string name="home">Home</string>
+    <string name="favorite">Favorite</string>
+    <string name="profile">Profile</string>
+    <string name="cart">Cart</string>
+    <string name="wearable">Wearable</string>
+    <string name="laptop">Laptop</string>
+    <string name="phones">Phones</string>
 </resources>
