@@ -24,4 +24,8 @@
     <string name="wearable">Wearable</string>
     <string name="laptop">Laptop</string>
     <string name="phones">Phones</string>
+    <string name="favorites">Favorites</string>
+    <string name="checkout">Checkout</string>
+    <string name="total">Total</string>
+    <string name="free_delivery_text">Delivery for FREE until the end of the month</string>
 </resources>

@@ -6,6 +6,7 @@
     android:layout_height="130dp"
     android:background="@drawable/bg_product_item_white"
     android:orientation="horizontal"
+    android:layout_marginVertical="10dp"
     android:padding="10dp">
 
     <ImageView

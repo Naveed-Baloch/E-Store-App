@@ -2,9 +2,11 @@
 <resources>
     <color name="primaryColor">#5956e9</color>
     <color name="primaryLightColor">#7DCCEC</color>
+    <color name="blueLightColor">#D3F2FF</color>
     <color name="primaryDarkColor">#002cb6</color>
     <color name="primaryTextColor">#ffffff</color>
     <color name="backgroundColor">#F2F2F2</color>
+    <color name="semiWhite">#F5F5F8</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>
