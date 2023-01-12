@@ -28,4 +28,11 @@
     <string name="checkout">Checkout</string>
     <string name="total">Total</string>
     <string name="free_delivery_text">Delivery for FREE until the end of the month</string>
+    <string name="user_address">Address: 43 Oxford Road M13 4GR Manchester, UK</string>
+    <string name="user_name">Rosina Doe</string>
+    <string name="my_profile">My Profile</string>
+    <string name="notification">Notification</string>
+    <string name="order_history">Order History</string>
+    <string name="shopping_address">Shopping Address</string>
+    <string name="edit_profile">Edit Profile</string>
 </resources>

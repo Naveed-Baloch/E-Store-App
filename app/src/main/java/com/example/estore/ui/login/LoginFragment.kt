@@ -1,4 +1,4 @@
-package com.example.estore.ui
+package com.example.estore.ui.login
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
