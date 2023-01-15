@@ -8,6 +8,7 @@
     tools:context=".ui.search.SearchFragment">
 
     <include
+        android:id="@+id/topPanel"
         layout="@layout/layout_top_panel"/>
 
     <androidx.recyclerview.widget.RecyclerView

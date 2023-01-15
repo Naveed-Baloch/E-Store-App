@@ -121,7 +121,7 @@
         android:id="@+id/checkOutBtn"
         android:layout_width="300dp"
         android:layout_height="70dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="70dp"
         android:background="@drawable/bg_rounded_blue_btn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -22,10 +22,10 @@
         android:id="@+id/productImageView"
         android:layout_width="76dp"
         android:layout_height="76dp"
+        android:src="@drawable/user_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/user_image" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/userName"
@@ -33,9 +33,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:fontFamily="@font/rale_way_semi_bold"
+        android:text="@string/user_name"
         android:textColor="@color/black"
         android:textSize="18sp"
-        android:text="@string/user_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/productImageView"
@@ -45,9 +45,9 @@
         android:id="@+id/addressDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/userName">
 
         <ImageView

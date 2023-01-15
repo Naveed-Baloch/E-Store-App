@@ -5,6 +5,9 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.example.estore.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -19,14 +22,26 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager
             .findFragmentById(binding.navHostFragment.id) as NavHostFragment
         navController = navHostFragment.navController
-
+        binding.bottomNav.setOnItemSelectedListener { item -> handleMenuClick(item.itemId) }
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.homeFragment) {
-                binding.bottomNav.visibility = View.VISIBLE
-            } else {
+            if (destination.id == R.id.splashScreen || destination.id == R.id.loginFragment) {
                 binding.bottomNav.visibility = View.GONE
+            } else {
+                binding.bottomNav.visibility = View.VISIBLE
             }
         }
+    }
+
+    private fun handleMenuClick(id: Int): Boolean {
+        if (id == binding.bottomNav.selectedItemId) return false
+        when (id) {
+            R.id.home -> navController.navigate(R.id.homeFragment)
+            R.id.favorite -> navController.navigate(R.id.favFragment)
+            R.id.profile -> navController.navigate(R.id.profileFragment)
+            R.id.cart -> navController.navigate(R.id.cartFragment)
+            else -> return false
+        }
+        return true
     }
 
     override fun onSupportNavigateUp(): Boolean {

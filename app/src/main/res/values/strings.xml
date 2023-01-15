@@ -35,4 +35,6 @@
     <string name="order_history">Order History</string>
     <string name="shopping_address">Shopping Address</string>
     <string name="edit_profile">Edit Profile</string>
+    <string name="add_to_basket">Add to basket</string>
+    <string name="price">Price</string>
 </resources>
