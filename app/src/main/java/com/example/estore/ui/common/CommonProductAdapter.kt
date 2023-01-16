@@ -1,4 +1,4 @@
-package com.example.estore.ui.home.adapters
+package com.example.estore.ui.common
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,14 +8,13 @@ import com.example.estore.databinding.LayoutProductItemBinding
 import com.example.estore.databinding.LayoutProductItemHomeBinding
 
 
-class ProductAdapter() :
-    RecyclerView.Adapter<ProductAdapter.ProductVH>() {
+class CommonProductAdapter() :
+    RecyclerView.Adapter<CommonProductAdapter.ProductVH>() {
 
-    class ProductVH(private val binding: LayoutProductItemHomeBinding) :
+    class ProductVH(private val binding: LayoutProductItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind() {
             binding.productTitle.text = "Apple Watch"
-            binding.productDesc.text = "New Brand"
             binding.productPrice.text = "$ 24"
             binding.productImageView.setImageResource(R.drawable.product_image)
         }
@@ -23,7 +22,7 @@ class ProductAdapter() :
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ProductVH {
         val binding =
-            LayoutProductItemHomeBinding.inflate(
+            LayoutProductItemBinding.inflate(
                 LayoutInflater.from(viewGroup.context),
                 viewGroup,
                 false

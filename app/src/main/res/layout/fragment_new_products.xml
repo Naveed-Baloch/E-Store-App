@@ -8,6 +8,6 @@
     android:orientation="horizontal"
     tools:context=".ui.home.HotSellingProductsFragment"
     tools:itemCount="1"
-    tools:listitem="@layout/layout_product_item">
+    tools:listitem="@layout/layout_product_item_home">
 
 </androidx.recyclerview.widget.RecyclerView>

@@ -5,9 +5,6 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 import com.example.estore.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -24,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.navController
         binding.bottomNav.setOnItemSelectedListener { item -> handleMenuClick(item.itemId) }
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.splashScreen || destination.id == R.id.loginFragment) {
+            if (destination.id == R.id.splashScreen || destination.id == R.id.loginFragment || destination.id == R.id.searchFragment) {
                 binding.bottomNav.visibility = View.GONE
             } else {
                 binding.bottomNav.visibility = View.VISIBLE

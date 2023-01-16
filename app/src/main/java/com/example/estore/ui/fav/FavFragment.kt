@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.estore.R
 import com.example.estore.databinding.FragmentFavBinding
+import com.example.estore.ui.common.CommonProductAdapter
 import com.example.estore.ui.common.SpacingItemDecoration
 import com.example.estore.ui.home.adapters.ProductAdapter
 
@@ -25,16 +26,9 @@ class FavFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var adapter = ProductAdapter()
+        var adapter = CommonProductAdapter()
         binding?.let {
             it.favProducts.apply {
-                addItemDecoration(
-                    SpacingItemDecoration(
-                        left = resources.getDimensionPixelSize(R.dimen.margin),
-                        top = resources.getDimensionPixelSize(R.dimen.margin),
-                        right = resources.getDimensionPixelSize(R.dimen.margin),
-                    )
-                )
                 layoutManager = GridLayoutManager(requireContext(), 2)
                 this.adapter = adapter
             }
