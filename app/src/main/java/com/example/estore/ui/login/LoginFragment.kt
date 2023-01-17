@@ -1,17 +1,19 @@
 package com.example.estore.ui.login
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.findNavController
-import com.example.estore.R
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.viewModelScope
+import com.example.estore.data.model.User
 import com.example.estore.databinding.FragmentLoginBinding
-import com.example.estore.databinding.FragmentSplashBinding
+import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment() {
     var binding: FragmentLoginBinding? = null
+    private val loginVM: LoginVM by activityViewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -26,9 +28,22 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding?.loginBtn?.setOnClickListener {
-            it.findNavController().navigate(R.id.homeFragment)
+        binding?.let { binding ->
+            binding.loginBtn.setOnClickListener {
+                authenticate(binding)
+            }
         }
+    }
+
+    private fun authenticate(binding: FragmentLoginBinding) {
+        val email = binding.emailInput.text.toString()
+        val password = binding.passwordInput.text.toString()
+
+        //Todo
+        loginVM.viewModelScope.launch {
+            val token = loginVM.login(user = User("mor_2314", "83r5^_"))
+        }
+
     }
 
 }

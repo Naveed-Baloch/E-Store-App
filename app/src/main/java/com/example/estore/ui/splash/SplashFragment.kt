@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import com.example.estore.R
 import com.example.estore.databinding.FragmentSplashBinding
 
 @SuppressLint("CustomSplashScreen")
@@ -24,7 +23,8 @@ class SplashScreen : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding?.getStarted?.setOnClickListener {
-            it.findNavController().navigate(R.id.loginFragment)
+            val action = SplashScreenDirections.actionSplashScreen2ToLoginFragment2()
+            it.findNavController().navigate(action)
         }
     }
 }
