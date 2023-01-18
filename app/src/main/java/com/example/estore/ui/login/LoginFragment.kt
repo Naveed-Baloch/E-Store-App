@@ -1,6 +1,7 @@
 package com.example.estore.ui.login
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.estore.data.model.User
 import com.example.estore.databinding.FragmentLoginBinding
 import kotlinx.coroutines.launch
+
+private const val TAG = "LoginFragment"
 
 class LoginFragment : Fragment() {
     var binding: FragmentLoginBinding? = null
@@ -42,6 +45,7 @@ class LoginFragment : Fragment() {
         //Todo
         loginVM.viewModelScope.launch {
             val token = loginVM.login(user = User("mor_2314", "83r5^_"))
+            Log.d(TAG, "authenticate: ${token.token}")
         }
 
     }
