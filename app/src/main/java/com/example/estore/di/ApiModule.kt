@@ -3,7 +3,9 @@ package com.example.estore.di
 import android.app.Application
 import android.content.Context
 import com.example.estore.data.network.ApiService
+import com.example.estore.data.services.ProductService
 import com.example.estore.data.services.UserService
+import com.example.estore.repositories.ProductRepository
 import com.example.estore.repositories.UserRepository
 import com.example.estore.storage.UserStorage
 import com.example.estore.utils.constants.Constants
@@ -26,6 +28,7 @@ class ApiModule {
     fun provideContext(application: Application): Context {
         return application.applicationContext
     }
+
     @Provides
     @Singleton
     fun provideRetrofit(): Retrofit {
@@ -36,6 +39,7 @@ class ApiModule {
             .addConverterFactory(GsonConverterFactory.create()).build()
     }
 
+    // Services
     @Provides
     @Singleton
     fun provideApiService(retrofit: Retrofit): ApiService {
@@ -50,10 +54,23 @@ class ApiModule {
 
     @Provides
     @Singleton
+    fun provideProductService(apiService: ApiService): ProductService {
+        return ProductService(apiService)
+    }
+
+    //Repos
+    @Provides
+    @Singleton
     fun provideUserRepository(userService: UserService): UserRepository {
         return UserRepository(userService)
     }
+    @Provides
+    @Singleton
+    fun provideProductRepository(productService: ProductService): ProductRepository {
+        return ProductRepository(productService)
+    }
 
+    //Storage
     @Provides
     @Singleton
     fun provideUserStorage(context: Context): UserStorage {

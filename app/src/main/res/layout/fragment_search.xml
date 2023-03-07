@@ -12,52 +12,31 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginVertical="50dp"
+        android:layout_marginTop="40dp"
         android:src="@drawable/ic_arrow_left"
-        app:layout_constraintEnd_toStartOf="@id/searchView"
+        app:layout_constraintBottom_toBottomOf="@id/homeSearchText"
+        app:layout_constraintEnd_toStartOf="@id/homeSearchText"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/searchView"
-        android:layout_width="267dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="50dp"
-        android:background="@drawable/bg_rounded_borderd"
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/homeSearchText"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="40dp"
+        app:queryBackground="@android:color/transparent"
+        android:background="@drawable/bg_rounded_bordered"
+        android:fontFamily="@font/rale_way_semi_bold"
+        android:textSize="17sp"
+        app:iconifiedByDefault="false"
+        app:layout_constraintBottom_toBottomOf="@id/backIcon"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/drawerIcon"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:queryHint="Search Products" />
 
-        <ImageView
-            android:id="@+id/searchIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginStart="20dp"
-            android:src="@drawable/ic_search"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/homeSearchText"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <EditText
-            android:id="@+id/homeSearchText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:background="@android:color/transparent"
-            android:fontFamily="@font/rale_way_semi_bold"
-            android:hint="@string/search"
-            android:textSize="17sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/searchIcon"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="105dp"
-            tools:layout_editor_absoluteY="18dp" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/searchProductsRv"
@@ -67,9 +46,21 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchView"
+        app:layout_constraintTop_toBottomOf="@id/homeSearchText"
         tools:listitem="@layout/layout_product_item_home"
         tools:visibility="gone" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminateTint="@color/primaryColor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
 
     <include
         android:id="@+id/emptyResults"
@@ -81,7 +72,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchView"
+        app:layout_constraintTop_toBottomOf="@id/homeSearchText"
         tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,23 +1,24 @@
 package com.example.estore.ui.home.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.estore.R
-import com.example.estore.databinding.LayoutProductItemBinding
+import com.example.estore.data.model.Product
 import com.example.estore.databinding.LayoutProductItemHomeBinding
+import com.example.estore.utils.ImageUtil
 
-
-class ProductAdapter() :
+class ProductAdapter(private val products: List<Product>) :
     RecyclerView.Adapter<ProductAdapter.ProductVH>() {
 
     class ProductVH(private val binding: LayoutProductItemHomeBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind() {
-            binding.productTitle.text = "Apple Watch"
-            binding.productDesc.text = "New Brand"
-            binding.productPrice.text = "$ 24"
-            binding.productImageView.setImageResource(R.drawable.product_image)
+        @SuppressLint("SetTextI18n")
+        fun bind(product: Product) {
+            binding.productTitle.text = product.title
+            binding.productDesc.text = product.description
+            binding.productPrice.text = "$ ${product.price}"
+            ImageUtil.loadImageInto(product.image, binding.productImageView)
         }
     }
 
@@ -32,10 +33,10 @@ class ProductAdapter() :
     }
 
     override fun onBindViewHolder(viewHolder: ProductVH, position: Int) {
-        viewHolder.bind()
+        viewHolder.bind(products[position])
     }
 
     override fun getItemCount(): Int {
-        return 10
+        return products.size
     }
 }

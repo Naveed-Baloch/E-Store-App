@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -35,13 +34,15 @@ class SplashScreen : Fragment() {
 
         binding?.let { binding ->
             binding.apply {
-                getStarted.isVisible = false
+                getStarted.visibility = View.INVISIBLE
+                text.visibility = View.INVISIBLE
                 if (!userStorage.isFirstTime) {
                     lifecycleScope.launch {
                         navigateToHome()
                     }
                 } else {
-                    getStarted.isVisible = true
+                    getStarted.visibility = View.VISIBLE
+                    text.visibility = View.VISIBLE
                     getStarted.setOnClickListener {
                         userStorage.isFirstTime = false
                         var action =

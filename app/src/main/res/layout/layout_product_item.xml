@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="156dp"
     android:layout_height="250dp"
-    android:background="@color/backgroundColor"
     android:layout_margin="10dp"
+    android:background="@color/backgroundColor"
     tools:ignore="RtlSymmetry">
 
     <ImageView
@@ -22,6 +22,9 @@
         android:id="@+id/productImageView"
         android:layout_width="110dp"
         android:layout_height="110dp"
+        android:minWidth="110dp"
+        android:minHeight="110dp"
+        android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -43,6 +46,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/rale_way_semi_bold"
+            android:maxWidth="150dp"
+            android:maxLines="1"
+            android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="22sp"
             tools:text="Apple Watch" />
@@ -53,6 +59,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/rale_way_bold"
+            android:maxWidth="150dp"
+            android:maxLines="1"
             android:textAlignment="center"
             android:textColor="@color/primaryColor"
             android:textSize="17sp"
