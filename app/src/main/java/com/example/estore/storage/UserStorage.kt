@@ -3,11 +3,13 @@ package com.example.estore.storage
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
+import javax.inject.Inject
 
-class UserStorage(val context: Context) {
+class UserStorage @Inject constructor(val context: Context) {
     companion object {
         const val SHARED_PREF_FILE = "SharedPreferencesEStore"
         const val SHARED_PREF_TOKEN_KEY = "SharedPreferencesTokenId"
+        const val IS_FIRST_TIME = "IsFirstTime"
     }
 
     private val sharePref: SharedPreferences =
@@ -28,5 +30,9 @@ class UserStorage(val context: Context) {
             remove(SHARED_PREF_TOKEN_KEY)
         }
     }
+
+    var isFirstTime: Boolean
+        get() = sharePref.getBoolean(IS_FIRST_TIME, true)
+        set(value) = sharePref.edit { putBoolean(IS_FIRST_TIME, value) }
 
 }

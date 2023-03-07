@@ -6,7 +6,7 @@
     app:startDestination="@id/splashScreen">
     <fragment
         android:id="@+id/splashScreen"
-        android:name="com.example.estore.ui.SplashScreen"
+        android:name="com.example.estore.ui.splash.SplashScreen"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash">
         <action
@@ -14,6 +14,9 @@
             app:destination="@id/loginFragment"
             app:popUpTo="@+id/splashScreen"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashScreen_to_home2"
+            app:destination="@id/home" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -30,14 +33,12 @@
         android:id="@+id/home"
         android:name="com.example.estore.ui.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home">
-    </fragment>
+        tools:layout="@layout/fragment_home"/>
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.estore.ui.search.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search"
-        />
+        tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/profile"
         android:name="com.example.estore.ui.profile.ProfileFragment"

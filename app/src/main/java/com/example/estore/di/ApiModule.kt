@@ -1,7 +1,11 @@
 package com.example.estore.di
 
+import android.app.Application
+import android.content.Context
 import com.example.estore.data.network.ApiService
+import com.example.estore.data.services.UserService
 import com.example.estore.repositories.UserRepository
+import com.example.estore.storage.UserStorage
 import com.example.estore.utils.constants.Constants
 import dagger.Module
 import dagger.Provides
@@ -18,6 +22,10 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class ApiModule {
 
+    @Provides
+    fun provideContext(application: Application): Context {
+        return application.applicationContext
+    }
     @Provides
     @Singleton
     fun provideRetrofit(): Retrofit {
@@ -36,7 +44,19 @@ class ApiModule {
 
     @Provides
     @Singleton
-    fun provideUserRepository(apiService: ApiService): UserRepository {
-        return UserRepository(apiService)
+    fun provideUserService(apiService: ApiService): UserService {
+        return UserService(apiService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserRepository(userService: UserService): UserRepository {
+        return UserRepository(userService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserStorage(context: Context): UserStorage {
+        return UserStorage(context)
     }
 }
