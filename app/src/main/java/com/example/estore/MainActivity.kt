@@ -7,7 +7,6 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.estore.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNav.setupWithNavController(navController)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.splashScreen || destination.id == R.id.loginFragment || destination.id == R.id.searchFragment) {
+            if (destination.id == R.id.splashScreen || destination.id == R.id.loginFragment || destination.id == R.id.searchFragment || destination.id == R.id.productDetail) {
                 binding.bottomNav.visibility = View.GONE
             } else {
                 binding.bottomNav.visibility = View.VISIBLE

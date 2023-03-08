@@ -24,17 +24,18 @@ class CartFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var adapter = CartAdapter()
+        val adapter = CartAdapter()
         binding?.let {
             it.cartProductsRv.apply {
                 layoutManager = LinearLayoutManager(requireContext())
                 this.adapter = adapter
             }
-            it.totalPrice.text = "$ 245"
+            it.price.text = "$ 245"
             setUpTopPanel(it)
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setUpTopPanel(binding: FragmentCartBinding) {
         binding.topPanel.apply {
             screenTitle.text = "Cart"

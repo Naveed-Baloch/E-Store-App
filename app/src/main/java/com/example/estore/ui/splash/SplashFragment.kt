@@ -18,9 +18,9 @@ import javax.inject.Inject
 @SuppressLint("CustomSplashScreen")
 class SplashScreen : Fragment() {
     var binding: FragmentSplashBinding? = null
-    val directionToLoginFragment =
+    private val directionToLoginFragment =
         SplashScreenDirections.actionSplashScreen2ToLoginFragment2()
-    val directionToHomeFragment =
+    private val directionToHomeFragment =
         SplashScreenDirections.actionSplashScreenToHome2()
 
     @Inject

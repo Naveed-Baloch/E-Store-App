@@ -8,6 +8,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.estore.common.alert
 import com.example.estore.data.Resource
@@ -42,7 +43,11 @@ class HotSellingProductsFragment : Fragment() {
                             binding.progressBar.isVisible = false
                             res.data?.data?.let {
                                 binding.hotSellingProductsRv.isVisible = true
-                                val adapter = ProductAdapter(it)
+                                val adapter = ProductAdapter(it, onProductClicked = { product ->
+                                    val directionToDetailProductPage =
+                                        HomeFragmentDirections.actionHomeToProductDetail(product)
+                                    findNavController().navigate(directionToDetailProductPage)
+                                })
                                 binding.hotSellingProductsRv.adapter = adapter
                             }
                         }

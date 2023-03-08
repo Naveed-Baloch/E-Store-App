@@ -33,12 +33,20 @@
         android:id="@+id/home"
         android:name="com.example.estore.ui.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home"/>
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_home_to_productDetail"
+            app:destination="@id/productDetail" />
+    </fragment>
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.estore.ui.search.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_productDetail"
+            app:destination="@id/productDetail" />
+    </fragment>
     <fragment
         android:id="@+id/profile"
         android:name="com.example.estore.ui.profile.ProfileFragment"
@@ -59,4 +67,13 @@
         android:id="@+id/cart"
         android:name="com.example.estore.ui.cart.CartFragment"
         android:label="CartFragment" />
+    <fragment
+        android:id="@+id/productDetail"
+        android:name="com.example.estore.ui.product_detail.ProductDetail"
+        android:label="fragment_product_detail"
+        tools:layout="@layout/fragment_product_detail" >
+        <argument
+            android:name="product"
+            app:argType="com.example.estore.data.model.Product" />
+    </fragment>
 </navigation>

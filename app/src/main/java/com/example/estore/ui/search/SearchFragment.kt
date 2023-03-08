@@ -49,7 +49,14 @@ class SearchFragment : Fragment() {
                             binding.progressBar.isVisible = false
                             res.data?.data?.let {
                                 binding.searchProductsRv.isVisible = true
-                                val adapter = CommonProductAdapter(it)
+                                val adapter =
+                                    CommonProductAdapter(it, onProductClicked = { product ->
+                                        val directionToDetailProductPage =
+                                            SearchFragmentDirections.actionSearchFragmentToProductDetail(
+                                                product
+                                            )
+                                        findNavController().navigate(directionToDetailProductPage)
+                                    })
                                 binding.searchProductsRv.adapter = adapter
                             }
                         }
@@ -74,7 +81,14 @@ class SearchFragment : Fragment() {
                             binding.progressBar.isVisible = false
                             res.data?.data?.let {
                                 binding.searchProductsRv.isVisible = true
-                                val adapter = CommonProductAdapter(it)
+                                val adapter =
+                                    CommonProductAdapter(it, onProductClicked = { product ->
+                                        val directionToDetailProductPage =
+                                            SearchFragmentDirections.actionSearchFragmentToProductDetail(
+                                                product
+                                            )
+                                        findNavController().navigate(directionToDetailProductPage)
+                                    })
                                 binding.searchProductsRv.adapter = adapter
                             }
                         }

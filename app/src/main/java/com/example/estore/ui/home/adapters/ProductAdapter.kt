@@ -8,17 +8,20 @@ import com.example.estore.data.model.Product
 import com.example.estore.databinding.LayoutProductItemHomeBinding
 import com.example.estore.utils.ImageUtil
 
-class ProductAdapter(private val products: List<Product>) :
+class ProductAdapter(private val products: List<Product>, val onProductClicked: (Product) -> Unit) :
     RecyclerView.Adapter<ProductAdapter.ProductVH>() {
 
     class ProductVH(private val binding: LayoutProductItemHomeBinding) :
         RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
-        fun bind(product: Product) {
+        fun bind(product: Product, onProductClicked: (Product) -> Unit) {
             binding.productTitle.text = product.title
             binding.productDesc.text = product.description
             binding.productPrice.text = "$ ${product.price}"
             ImageUtil.loadImageInto(product.image, binding.productImageView)
+            itemView.setOnClickListener {
+                onProductClicked(product)
+            }
         }
     }
 
@@ -33,7 +36,7 @@ class ProductAdapter(private val products: List<Product>) :
     }
 
     override fun onBindViewHolder(viewHolder: ProductVH, position: Int) {
-        viewHolder.bind(products[position])
+        viewHolder.bind(products[position], onProductClicked)
     }
 
     override fun getItemCount(): Int {
