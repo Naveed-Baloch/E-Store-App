@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.example.estore.databinding.FragmentSplashBinding
 import com.example.estore.storage.UserStorage
@@ -17,6 +18,10 @@ import javax.inject.Inject
 @SuppressLint("CustomSplashScreen")
 class SplashScreen : Fragment() {
     var binding: FragmentSplashBinding? = null
+    val directionToLoginFragment =
+        SplashScreenDirections.actionSplashScreen2ToLoginFragment2()
+    val directionToHomeFragment =
+        SplashScreenDirections.actionSplashScreenToHome2()
 
     @Inject
     lateinit var userStorage: UserStorage
@@ -34,32 +39,28 @@ class SplashScreen : Fragment() {
 
         binding?.let { binding ->
             binding.apply {
-                getStarted.visibility = View.INVISIBLE
-                text.visibility = View.INVISIBLE
                 if (!userStorage.isFirstTime) {
-                    lifecycleScope.launch {
-                        navigateToHome()
-                    }
+                    getStarted.visibility = View.INVISIBLE
+                    text.visibility = View.INVISIBLE
+                }
+                if (userStorage.getActiveToken() != null) {
+                    navigate(directionToHomeFragment)
                 } else {
-                    getStarted.visibility = View.VISIBLE
-                    text.visibility = View.VISIBLE
-                    getStarted.setOnClickListener {
-                        userStorage.isFirstTime = false
-                        var action =
-                            SplashScreenDirections.actionSplashScreen2ToLoginFragment2()
-                        if (!userStorage.getActiveToken().isNullOrEmpty()) {
-                            action = SplashScreenDirections.actionSplashScreenToHome2()
-                        }
-                        findNavController().navigate(action)
-                    }
+                    navigate(directionToLoginFragment)
+                }
+                getStarted.setOnClickListener {
+                    userStorage.isFirstTime = false
+                    findNavController().navigate(directionToLoginFragment)
                 }
             }
         }
     }
 
-    private suspend fun navigateToHome() {
-        delay(2000L)
-        val action = SplashScreenDirections.actionSplashScreenToHome2()
-        findNavController().navigate(action)
+    private fun navigate(direction: NavDirections) {
+        lifecycleScope.launch {
+            delay(2000L)
+            val action =
+                findNavController().navigate(direction)
+        }
     }
 }

@@ -1,23 +1,22 @@
 package com.example.estore.ui.profile
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
-import com.example.estore.R
-import com.example.estore.databinding.FragmentFavBinding
 import com.example.estore.databinding.FragmentProfileBinding
-import com.example.estore.ui.common.SpacingItemDecoration
-import com.example.estore.ui.home.adapters.ProductAdapter
+import com.example.estore.storage.UserStorage
+import javax.inject.Inject
 
 class ProfileFragment : Fragment() {
 
     private var binding: FragmentProfileBinding? = null
 
+    @Inject
+    lateinit var userStorage: UserStorage
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -28,18 +27,23 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        userStorage = UserStorage(requireContext())
         binding?.let {
             setUpTopPanel(it)
-
+            it.logout.setOnClickListener {
+                userStorage.clearActiveToken()
+                val action =
+                    ProfileFragmentDirections.actionProfileToLoginFragment()
+                findNavController().navigate(action)
+            }
         }
     }
 
-    private fun setUpTopPanel(binding: FragmentProfileBinding){
+    private fun setUpTopPanel(binding: FragmentProfileBinding) {
         binding.topPanel.apply {
-            screenTitle.text="Profile"
-            actionIcon.isVisible=false
-            backIcon.isVisible=false
-
+            screenTitle.text = "Profile"
+            actionIcon.isVisible = false
+            backIcon.isVisible = false
         }
     }
 }

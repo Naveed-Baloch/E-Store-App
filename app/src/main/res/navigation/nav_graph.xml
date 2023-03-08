@@ -47,6 +47,9 @@
         <action
             android:id="@+id/action_profileFragment_to_cartFragment"
             app:destination="@id/cart" />
+        <action
+            android:id="@+id/action_profile_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/favorite"

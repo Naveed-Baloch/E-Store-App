@@ -32,6 +32,7 @@
     <string name="user_name">Rosina Doe</string>
     <string name="my_profile">My Profile</string>
     <string name="notification">Notification</string>
+    <string name="logout">Logout</string>
     <string name="order_history">Order History</string>
     <string name="shopping_address">Shopping Address</string>
     <string name="edit_profile">Edit Profile</string>
