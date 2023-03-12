@@ -1,10 +1,15 @@
 package com.example.estore.repositories
 
 import com.example.estore.data.ResourceRepository
+import com.example.estore.data.local.Dao
+import com.example.estore.data.model.Product
 import com.example.estore.data.services.ProductService
 import javax.inject.Inject
 
-class ProductRepository @Inject constructor(private val productService: ProductService) :
+class ProductRepository @Inject constructor(
+    private val productService: ProductService,
+    private val dao: Dao
+) :
     ResourceRepository() {
 
     suspend fun fetchProducts() = loadResource {
@@ -14,4 +19,10 @@ class ProductRepository @Inject constructor(private val productService: ProductS
     suspend fun searchProducts(query: String) = loadResource {
         productService.searchProducts(query)
     }
+
+    suspend fun addFavoriteProduct(product: Product) = dao.insertProduct(product)
+
+    suspend fun deleteFavoriteProduct(product: Product) = dao.deleteProduct(product)
+
+    fun getAllFavoriteProducts() = loadResource { dao.getAllProducts() }
 }

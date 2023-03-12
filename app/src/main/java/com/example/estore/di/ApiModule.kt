@@ -2,6 +2,8 @@ package com.example.estore.di
 
 import android.app.Application
 import android.content.Context
+import androidx.room.Room
+import com.example.estore.data.local.Database
 import com.example.estore.data.network.ApiService
 import com.example.estore.data.services.ProductService
 import com.example.estore.data.services.UserService
@@ -64,10 +66,11 @@ class ApiModule {
     fun provideUserRepository(userService: UserService): UserRepository {
         return UserRepository(userService)
     }
+
     @Provides
     @Singleton
-    fun provideProductRepository(productService: ProductService): ProductRepository {
-        return ProductRepository(productService)
+    fun provideProductRepository(productService: ProductService,db: Database): ProductRepository {
+        return ProductRepository(productService,db.dao)
     }
 
     //Storage
@@ -75,5 +78,14 @@ class ApiModule {
     @Singleton
     fun provideUserStorage(context: Context): UserStorage {
         return UserStorage(context)
+    }
+
+    //Room Database
+    @Provides
+    @Singleton
+    fun provideProductDatabase(app: Application): Database {
+        return Room.databaseBuilder(
+            app, Database::class.java, "product_db"
+        ).build()
     }
 }
