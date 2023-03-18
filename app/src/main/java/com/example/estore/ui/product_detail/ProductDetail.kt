@@ -12,23 +12,27 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.estore.R
 import com.example.estore.data.Resource
+import com.example.estore.data.model.Cart
 import com.example.estore.data.model.Product
 import com.example.estore.databinding.FragmentProductDetailBinding
+import com.example.estore.extensions.containsProduct
+import com.example.estore.ui.cart.CartVM
 import com.example.estore.ui.home.HomeVM
 import com.example.estore.utils.ImageUtil
+import kotlinx.android.synthetic.main.fragment_product_detail.*
+import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.layout_top_panel.*
 import kotlinx.android.synthetic.main.layout_top_panel.view.*
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class ProductDetail : Fragment() {
     var binding: FragmentProductDetailBinding? = null
 
     private val safeArgs: ProductDetailArgs by navArgs()
     private val homeVM: HomeVM by activityViewModels()
+    private val cartVM: CartVM by activityViewModels()
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = FragmentProductDetailBinding.inflate(inflater, container, false)
         return binding?.root
@@ -46,6 +50,26 @@ class ProductDetail : Fragment() {
                 productTitle.text = product.title
                 productDesc.text = product.description
                 price.text = "$ ${product.price}"
+                updateAddToCartBtnTxt(product)
+                addToCart.setOnClickListener {
+                    addCartProduct(product)
+                }
+            }
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun updateAddToCartBtnTxt(product: Product) {
+        lifecycleScope.launchWhenStarted {
+            val job = CoroutineScope(Dispatchers.IO).async {
+                return@async cartVM.getCart()
+            }
+            val cart = job.await()
+            val products = cart?.products ?: emptyList()
+            if (products.containsProduct(product.id)) {
+                binding!!.addToCartBtnTxt.text = "Remove From Basket"
+            } else {
+                binding!!.addToCartBtnTxt.text = "Add To Basket"
             }
         }
     }
@@ -57,15 +81,9 @@ class ProductDetail : Fragment() {
                     is Resource.Loading -> {}
                     is Resource.Success -> {
                         val products = res.data
-                        //Check the Status on First time
-                        if (!products.isNullOrEmpty() && !isBtnToggled) {
-                            updateFavoriteState(products.contains(product))
-                        } else {
-                            updateFavoriteState(false)
-                        }
                         // check if the button is toggled
                         if (isBtnToggled) {
-                            if (!products.isNullOrEmpty() && products.contains(product)) {
+                            if (!products.isNullOrEmpty() && products.containsProduct(product.id)) {
                                 // remove the product
                                 homeVM.deleteFavoriteProduct(product)
                                 binding?.topPanel?.actionIcon?.apply {
@@ -74,9 +92,7 @@ class ProductDetail : Fragment() {
                                 }
                                 delay(300L)
                                 updateFavoriteState(false)
-                            }
-
-                            if (products != null && !products.contains(product)) {
+                            } else {
                                 // Add Product
                                 homeVM.addFavoriteProduct(product)
                                 binding?.topPanel?.actionIcon?.apply {
@@ -86,12 +102,39 @@ class ProductDetail : Fragment() {
                                 delay(300L)
                                 updateFavoriteState(true)
                             }
+                        } else {
+                            if (!products.isNullOrEmpty()) {
+                                updateFavoriteState(products.containsProduct(product.id))
+                            } else {
+                                updateFavoriteState(false)
+                            }
                         }
-
                     }
                     is Resource.Error -> {}
                 }
             }
+        }
+    }
+
+    private fun addCartProduct(product: Product) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val cart = cartVM.getCart()
+            //first product
+            if (cart == null) {
+                product.quantity = 1
+                val newCart = Cart(1, listOf(product))
+                cartVM.insertCart(newCart)
+            }
+            val cartProducts = cart?.products ?: emptyList()
+            if (cartProducts.containsProduct(product.id)) {
+                val cartProductsUpdated = cartProducts.filter { it.id != product.id }
+                cartVM.insertCart(Cart(1, cartProductsUpdated))
+            } else {
+                product.quantity = 1
+                val cartProductsUpdated = cartProducts.plus(product)
+                cartVM.insertCart(Cart(1, cartProductsUpdated))
+            }
+            updateAddToCartBtnTxt(product)
         }
     }
 

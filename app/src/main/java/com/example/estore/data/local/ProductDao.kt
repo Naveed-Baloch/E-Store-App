@@ -3,10 +3,9 @@ package com.example.estore.data.local
 import androidx.room.*
 import androidx.room.Dao
 import com.example.estore.data.model.Product
-import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface Dao {
+interface ProductDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertProduct(Product: Product)
 

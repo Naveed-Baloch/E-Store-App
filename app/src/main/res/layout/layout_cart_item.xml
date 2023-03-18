@@ -28,6 +28,8 @@
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="16sp"
+        android:maxLines="1"
+        android:ellipsize="end"
         app:layout_constraintBottom_toTopOf="@+id/cartProductPrice"
         app:layout_constraintStart_toEndOf="@id/cartProductImage"
         app:layout_constraintTop_toTopOf="parent"

@@ -132,12 +132,14 @@
             android:id="@+id/loginBtn"
             android:layout_width="300dp"
             android:layout_height="70dp"
+            android:alpha=".5"
             android:background="@drawable/bg_rounded_blue_btn"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/loginInputView">
+            app:layout_constraintTop_toBottomOf="@+id/loginInputView"
+            tools:alpha="1">
 
             <TextView
                 android:id="@+id/loginBtnText"

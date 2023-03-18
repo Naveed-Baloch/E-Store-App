@@ -1,22 +1,26 @@
 package com.example.estore.ui.cart.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.estore.R
+import com.example.estore.data.model.Product
 import com.example.estore.databinding.LayoutCartItemBinding
+import com.example.estore.utils.ImageUtil
 
 
-class CartAdapter() : RecyclerView.Adapter<CartAdapter.ProductVH>() {
+class CartAdapter(private val products: List<Product>) :
+    RecyclerView.Adapter<CartAdapter.ProductVH>() {
 
     class ProductVH(private val binding: LayoutCartItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind() {
+        @SuppressLint("SetTextI18n")
+        fun bind(product: Product) {
             binding.apply {
-                carProductTitle.text = "Apple Watch"
-                cartProductPrice.text = "$ 24"
-                cartProductQty.text = "2"
-                cartProductImage.setImageResource(R.drawable.product_image)
+                carProductTitle.text = product.title
+                cartProductPrice.text = "$ ${product.price}"
+                cartProductQty.text = "${product.quantity}"
+                ImageUtil.loadImageInto(product.image, binding.cartProductImage)
             }
         }
     }
@@ -29,10 +33,10 @@ class CartAdapter() : RecyclerView.Adapter<CartAdapter.ProductVH>() {
     }
 
     override fun onBindViewHolder(viewHolder: ProductVH, position: Int) {
-        viewHolder.bind()
+        viewHolder.bind(products[position])
     }
 
     override fun getItemCount(): Int {
-        return 12
+        return products.size
     }
 }

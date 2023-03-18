@@ -7,6 +7,7 @@ import com.example.estore.data.local.Database
 import com.example.estore.data.network.ApiService
 import com.example.estore.data.services.ProductService
 import com.example.estore.data.services.UserService
+import com.example.estore.repositories.CartRepository
 import com.example.estore.repositories.ProductRepository
 import com.example.estore.repositories.UserRepository
 import com.example.estore.storage.UserStorage
@@ -69,15 +70,21 @@ class ApiModule {
 
     @Provides
     @Singleton
-    fun provideProductRepository(productService: ProductService,db: Database): ProductRepository {
-        return ProductRepository(productService,db.dao)
+    fun provideCartRepository(db: Database): CartRepository {
+        return CartRepository(db.cartDao)
+    }
+
+    @Provides
+    @Singleton
+    fun provideProductRepository(productService: ProductService, db: Database): ProductRepository {
+        return ProductRepository(productService, db.dao)
     }
 
     //Storage
     @Provides
     @Singleton
-    fun provideUserStorage(context: Context): UserStorage {
-        return UserStorage(context)
+    fun provideUserStorage(app: Application): UserStorage {
+        return UserStorage(app.applicationContext)
     }
 
     //Room Database

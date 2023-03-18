@@ -49,8 +49,15 @@ class LoginFragment : Fragment() {
                     ) {
                         emailInput.error = null
                         passwordInput.error = null
-                        loginBtn.isEnabled = binding.emailInput.text.toString().isValidEmail()
-                                && binding.passwordInput.text?.isNotEmpty() == true
+                        if (binding.emailInput.text.toString().isValidEmail()
+                            && binding.passwordInput.text?.isNotEmpty() == true
+                        ) {
+                            loginBtn.isEnabled = true
+                            loginBtn.alpha = 1f
+                        } else {
+                            loginBtn.isEnabled = false
+                            loginBtn.alpha = 0.5f
+                        }
                     }
                 }
                 emailInput.addTextChangedListener(textWatcher)
