@@ -20,7 +20,7 @@ class LoginVM @Inject constructor(
     suspend fun login(user: User) = flow {
         val login = repository.login(user)
         when (login) {
-            is Result.Success<*> -> {
+            is Result.Success -> {
                 userStorage.setActiveToken(login.data?.token.orEmpty())
             }
             else -> {}

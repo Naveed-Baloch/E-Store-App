@@ -11,51 +11,50 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.estore.common.alert
-import com.example.estore.data.Resource
+import com.example.estore.data.Result
+import com.example.estore.data.model.Product
 import com.example.estore.databinding.FragmentNewProductsBinding
 import com.example.estore.ui.home.adapters.ProductAdapter
 import kotlinx.coroutines.launch
 
 class NewProductsFragment : Fragment() {
     private val homeVM: HomeVM by activityViewModels()
-    private var binding: FragmentNewProductsBinding? = null
+    private lateinit var binding: FragmentNewProductsBinding
+    private lateinit var adapter: ProductAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentNewProductsBinding.inflate(inflater, container, false)
-        return binding?.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupProductAdapter()
+        attachObservers()
+    }
 
-        binding?.let { binding ->
-            binding.newSellingProductsRv.layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+    private fun setupProductAdapter() {
+        adapter = ProductAdapter(emptyList(), this::onProductClicked)
+        binding.newSellingProductsRv.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.newSellingProductsRv.adapter = adapter
+    }
 
-            lifecycleScope.launch {
-                homeVM.fetchProducts().collect { res ->
-                    when (res) {
-                        is Resource.Loading -> {
-                            binding.progressBar.isVisible = true
-                        }
-                        is Resource.Success -> {
-                            binding.progressBar.isVisible = false
-                            res.data?.data?.let {
-                                binding.newSellingProductsRv.isVisible = true
-                                val adapter = ProductAdapter(it, onProductClicked = { product ->
-                                    val directionToDetailProductPage =
-                                        HomeFragmentDirections.actionHomeToProductDetail(product)
-                                    findNavController().navigate(directionToDetailProductPage)
-                                })
-                                binding.newSellingProductsRv.adapter = adapter
-                            }
-                        }
-                        is Resource.Error -> {
-                            binding.progressBar.isVisible = false
+    private fun onProductClicked(product: Product) {
+        val directionToDetailProductPage = HomeFragmentDirections.actionHomeToProductDetail(product)
+        findNavController().navigate(directionToDetailProductPage)
+    }
+
+    private fun attachObservers() {
+        lifecycleScope.launch {
+            homeVM.products.collect { products ->
+                if (products.isEmpty()) {
+                    homeVM.fetchProducts().collect { res ->
+                        binding.progressBar.isVisible = res is Result.Loading
+                        if (res is Result.Error) {
                             alert(requireContext())
                                 .setTitle("Something went wrong :(")
                                 .setMessage(res.cause?.message)
@@ -63,6 +62,13 @@ class NewProductsFragment : Fragment() {
                         }
                     }
                 }
+            }
+        }
+
+        lifecycleScope.launch {
+            homeVM.products.collect { products ->
+                binding.newSellingProductsRv.isVisible = true
+                adapter.setData(products)
             }
         }
     }

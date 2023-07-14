@@ -13,67 +13,57 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.estore.R
 import com.example.estore.common.alert
-import com.example.estore.data.Resource
+
 import com.example.estore.data.model.Product
 import com.example.estore.databinding.FragmentFavBinding
 import com.example.estore.ui.common.CommonProductAdapter
 import com.example.estore.ui.home.HomeVM
 import kotlinx.android.synthetic.main.fragment_splash.view.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class FavFragment : Fragment() {
-    private var binding: FragmentFavBinding? = null
+    private lateinit var binding: FragmentFavBinding
     private val homeVM: HomeVM by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentFavBinding.inflate(inflater, container, false)
-        return binding?.root
+        return binding.root
     }
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding?.let {
+        binding.apply {
             setUpTopPanel()
-            it.progressBar.isVisible = true
-            lifecycleScope.launch {
-                homeVM.getAllFavoriteProducts().collect { res ->
-                    when (res) {
-                        is Resource.Loading -> {
-                            it.emptyFavView.isVisible = false
-                            it.favProducts.isVisible = false
-                        }
-                        is Resource.Success -> {
-                            it.progressBar.isVisible = false
-                            val products = res.data
-                            if (products.isNullOrEmpty()) {
-                                showEmpty()
-                            } else {
-                                showFavList(products)
-                            }
-                        }
-                        is Resource.Error -> {
-                            it.progressBar.isVisible = false
-                            it.emptyFavView.isVisible = false
-                            it.favProducts.isVisible = false
-                            alert(requireContext()).setTitle("Something went wrong :(")
-                                .setMessage(res.cause?.message).show()
-                        }
-                    }
+            fetchProducts()
+        }
+    }
+
+    private fun fetchProducts() {
+        binding.progressBar.isVisible = true
+        lifecycleScope.launch(Dispatchers.IO) {
+            val products = homeVM.getAllFavoriteProducts()
+            withContext(Dispatchers.Main) {
+                if (products.isEmpty()) {
+                    showEmpty()
+                } else {
+                    showFavList(products)
                 }
             }
         }
     }
 
     private fun showFavList(products: List<Product>) {
-        binding?.let {
-            it.progressBar.isVisible = false
-            it.emptyFavView.isVisible = false
-            it.favProducts.isVisible = true
-            it.favProducts.apply {
+        binding.apply {
+            this.progressBar.isVisible = false
+            this.emptyFavView.isVisible = false
+            this.favProducts.isVisible = true
+            this.favProducts.apply {
                 val adapter = CommonProductAdapter(products, onProductClicked = { product ->
                     val directionToDetailProductPage =
                         FavFragmentDirections.actionFavoriteToProductDetail(product)
@@ -87,10 +77,11 @@ class FavFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun showEmpty() {
-        binding?.let {
-            it.favProducts.isVisible = false
-            it.emptyFavView.isVisible = true
-            it.emptyFav.apply {
+        binding.apply {
+            this.progressBar.isVisible = false
+            this.favProducts.isVisible = false
+            this.emptyFavView.isVisible = true
+            this.emptyFav.apply {
                 emptyScreenImage.setImageResource(R.drawable.empty_fav)
                 emptyScreenTitle.text = "No favorites yet"
                 emptyScreenDesc.text = "Hit the orange button down\n below to Create an order"
@@ -106,7 +97,7 @@ class FavFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun setUpTopPanel() {
-        binding?.topPanel?.apply {
+        binding.topPanel.apply {
             screenTitle.text = "Favorite"
             actionIcon.isVisible = false
             backIcon.isVisible = false

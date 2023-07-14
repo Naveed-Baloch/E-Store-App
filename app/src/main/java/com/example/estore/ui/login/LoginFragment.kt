@@ -21,52 +21,48 @@ import kotlinx.coroutines.launch
 private const val TAG = "LoginFragment"
 
 class LoginFragment : Fragment() {
-    var binding: FragmentLoginBinding? = null
+    private lateinit var binding: FragmentLoginBinding
     private val loginVM: LoginVM by activityViewModels()
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
-        return binding?.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding?.let { binding ->
-            binding.apply {
-                loginBtn.isEnabled = false
-                val textWatcher = object : SimpleTextWatcher() {
-                    override fun onTextChanged(
-                        s: CharSequence?,
-                        start: Int,
-                        before: Int,
-                        count: Int
+
+        binding.apply {
+            loginBtn.isEnabled = false
+            val textWatcher = object : SimpleTextWatcher() {
+                override fun onTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    before: Int,
+                    count: Int
+                ) {
+                    emailInput.error = null
+                    passwordInput.error = null
+                    if (binding.emailInput.text.toString().isValidEmail()
+                        && binding.passwordInput.text?.isNotEmpty() == true
                     ) {
-                        emailInput.error = null
-                        passwordInput.error = null
-                        if (binding.emailInput.text.toString().isValidEmail()
-                            && binding.passwordInput.text?.isNotEmpty() == true
-                        ) {
-                            loginBtn.isEnabled = true
-                            loginBtn.alpha = 1f
-                        } else {
-                            loginBtn.isEnabled = false
-                            loginBtn.alpha = 0.5f
-                        }
+                        loginBtn.isEnabled = true
+                        loginBtn.alpha = 1f
+                    } else {
+                        loginBtn.isEnabled = false
+                        loginBtn.alpha = 0.5f
                     }
                 }
-                emailInput.addTextChangedListener(textWatcher)
-                passwordInput.addTextChangedListener(textWatcher)
-                loginBtn.setOnClickListener {
-                    authenticate(binding)
-                }
+            }
+            emailInput.addTextChangedListener(textWatcher)
+            passwordInput.addTextChangedListener(textWatcher)
+            loginBtn.setOnClickListener {
+                authenticate(binding)
             }
         }
+
     }
 
     private fun authenticate(binding: FragmentLoginBinding) {
@@ -83,8 +79,7 @@ class LoginFragment : Fragment() {
                             val data = result.data
                             if (data is Token) {
                                 // Handle success
-                                val action =
-                                    LoginFragmentDirections.actionLoginFragment2ToHomeFragment()
+                                val action = LoginFragmentDirections.actionLoginFragment2ToHomeFragment()
                                 findNavController().navigate(action)
                             } else {
                                 // Unexpected data type
@@ -95,6 +90,7 @@ class LoginFragment : Fragment() {
                                     .show()
                             }
                         }
+
                         else -> {
                             // Handle error
                             updateLoadState(false)
@@ -109,12 +105,11 @@ class LoginFragment : Fragment() {
     }
 
     private fun updateLoadState(isLoading: Boolean) {
-        binding?.let {
-            it.progressBar.isVisible = isLoading
-            it.loginBtnText.isVisible = !isLoading
+        binding.apply {
+            progressBar.isVisible = isLoading
+            loginBtnText.isVisible = !isLoading
         }
     }
 
-    fun String.isValidEmail() =
-        this.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(this).matches()
+    fun String.isValidEmail() = this.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(this).matches()
 }

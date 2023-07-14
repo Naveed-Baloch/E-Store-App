@@ -4,9 +4,9 @@ import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import com.example.estore.data.local.Database
-import com.example.estore.data.network.ApiService
-import com.example.estore.data.services.ProductService
-import com.example.estore.data.services.UserService
+import com.example.estore.data.service.EStoreApiService
+import com.example.estore.data.service.ProductService
+import com.example.estore.data.service.UserService
 import com.example.estore.repositories.CartRepository
 import com.example.estore.repositories.ProductRepository
 import com.example.estore.repositories.UserRepository
@@ -45,20 +45,20 @@ class ApiModule {
     // Services
     @Provides
     @Singleton
-    fun provideApiService(retrofit: Retrofit): ApiService {
-        return retrofit.create(ApiService::class.java)
+    fun provideApiService(retrofit: Retrofit): EStoreApiService {
+        return retrofit.create(EStoreApiService::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideUserService(apiService: ApiService): UserService {
-        return UserService(apiService)
+    fun provideUserService(EStoreApiService: EStoreApiService): UserService {
+        return UserService(EStoreApiService)
     }
 
     @Provides
     @Singleton
-    fun provideProductService(apiService: ApiService): ProductService {
-        return ProductService(apiService)
+    fun provideProductService(EStoreApiService: EStoreApiService): ProductService {
+        return ProductService(EStoreApiService)
     }
 
     //Repos

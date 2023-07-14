@@ -11,7 +11,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.estore.R
-import com.example.estore.data.Resource
 import com.example.estore.data.model.Cart
 import com.example.estore.data.model.Product
 import com.example.estore.databinding.FragmentProductDetailBinding
@@ -26,35 +25,42 @@ import kotlinx.android.synthetic.main.layout_top_panel.view.*
 import kotlinx.coroutines.*
 
 class ProductDetail : Fragment() {
-    var binding: FragmentProductDetailBinding? = null
+    private lateinit var binding: FragmentProductDetailBinding
 
     private val safeArgs: ProductDetailArgs by navArgs()
     private val homeVM: HomeVM by activityViewModels()
     private val cartVM: CartVM by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentProductDetailBinding.inflate(inflater, container, false)
-        return binding?.root
+        return binding.root
     }
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val product = safeArgs.product
-        binding?.let { binding ->
-            binding.apply {
-                setUpTopPanel(product)
-                toggleProductFavStatus(product, isBtnToggled = false)
-                ImageUtil.loadImageInto(product.image, productImage)
-                productTitle.text = product.title
-                productDesc.text = product.description
-                price.text = "$ ${product.price}"
-                updateAddToCartBtnTxt(product)
-                addToCart.setOnClickListener {
-                    addCartProduct(product)
-                }
-            }
+        setUpTopPanel(product)
+        toggleProductFavStatus(product, isBtnToggled = false)
+        updateAddToCartBtnTxt(product)
+        loadProduct(product = product)
+        setListeners(product)
+    }
+
+    private fun setListeners(product: Product) {
+        addToCart.setOnClickListener {
+            addCartProduct(product)
+        }
+    }
+
+    private fun loadProduct(product: Product) {
+        binding.apply {
+            ImageUtil.loadImageInto(product.image, binding.productImage)
+            productTitle.text = product.title
+            productDesc.text = product.description
+            price.text = "$ ${product.price}"
+
         }
     }
 
@@ -67,57 +73,51 @@ class ProductDetail : Fragment() {
             val cart = job.await()
             val products = cart?.products ?: emptyList()
             if (products.containsProduct(product.id)) {
-                binding!!.addToCartBtnTxt.text = "Remove From Basket"
+                binding.addToCartBtnTxt.text = "Remove From Basket"
             } else {
-                binding!!.addToCartBtnTxt.text = "Add To Basket"
+                binding.addToCartBtnTxt.text = "Add To Basket"
             }
         }
     }
 
     private fun toggleProductFavStatus(product: Product, isBtnToggled: Boolean) {
-        lifecycleScope.launch {
-            homeVM.getAllFavoriteProducts().collect { res ->
-                when (res) {
-                    is Resource.Loading -> {}
-                    is Resource.Success -> {
-                        val products = res.data
-                        // check if the button is toggled
-                        if (isBtnToggled) {
-                            if (!products.isNullOrEmpty() && products.containsProduct(product.id)) {
-                                // remove the product
-                                homeVM.deleteFavoriteProduct(product)
-                                binding?.topPanel?.actionIcon?.apply {
-                                    isEnabled = false
-                                    alpha = 0.5f
-                                }
-                                delay(300L)
-                                updateFavoriteState(false)
-                            } else {
-                                // Add Product
-                                homeVM.addFavoriteProduct(product)
-                                binding?.topPanel?.actionIcon?.apply {
-                                    isEnabled = false
-                                    alpha = 0.5f
-                                }
-                                delay(300L)
-                                updateFavoriteState(true)
-                            }
-                        } else {
-                            if (!products.isNullOrEmpty()) {
-                                updateFavoriteState(products.containsProduct(product.id))
-                            } else {
-                                updateFavoriteState(false)
-                            }
+        lifecycleScope.launch(Dispatchers.IO) {
+            val products = homeVM.getAllFavoriteProducts()
+            // check if the button is toggled
+            withContext(Dispatchers.Main) {
+                if (isBtnToggled) {
+                    if (products.isNotEmpty() && products.containsProduct(product.id)) {
+                        // remove the product
+                        homeVM.deleteFavoriteProduct(product)
+                        binding.topPanel.actionIcon.apply {
+                            isEnabled = false
+                            alpha = 0.5f
                         }
+                        delay(300L)
+                        updateFavoriteState(false)
+                    } else {
+                        // Add Product
+                        homeVM.addFavoriteProduct(product)
+                        binding.topPanel.actionIcon.apply {
+                            isEnabled = false
+                            alpha = 0.5f
+                        }
+                        delay(300L)
+                        updateFavoriteState(true)
                     }
-                    is Resource.Error -> {}
+                } else {
+                    if (products.isNotEmpty()) {
+                        updateFavoriteState(products.containsProduct(product.id))
+                    } else {
+                        updateFavoriteState(false)
+                    }
                 }
             }
         }
     }
 
     private fun addCartProduct(product: Product) {
-        CoroutineScope(Dispatchers.IO).launch {
+        lifecycleScope.launch(Dispatchers.IO) {
             val cart = cartVM.getCart()
             //first product
             if (cart == null) {
@@ -140,7 +140,7 @@ class ProductDetail : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun setUpTopPanel(product: Product) {
-        binding?.topPanel?.apply {
+        binding.topPanel.apply {
             screenTitle.text = "Product Detail"
             actionIcon.apply {
                 layoutParams.width = 100
@@ -159,7 +159,8 @@ class ProductDetail : Fragment() {
     }
 
     private fun updateFavoriteState(isFav: Boolean) {
-        binding?.topPanel?.actionIcon?.apply {
+
+        binding.topPanel.actionIcon.apply {
             isSelected = isFav
             isEnabled = true
             alpha = 1f

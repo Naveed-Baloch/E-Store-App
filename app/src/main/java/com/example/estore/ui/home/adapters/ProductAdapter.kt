@@ -3,12 +3,14 @@ package com.example.estore.ui.home.adapters
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.estore.data.model.Product
 import com.example.estore.databinding.LayoutProductItemHomeBinding
+import com.example.estore.ui.common.ProductDiffCallback
 import com.example.estore.utils.ImageUtil
 
-class ProductAdapter(private val products: List<Product>, val onProductClicked: (Product) -> Unit) :
+class ProductAdapter(private var products: List<Product>, val onProductClicked: (Product) -> Unit) :
     RecyclerView.Adapter<ProductAdapter.ProductVH>() {
 
     class ProductVH(private val binding: LayoutProductItemHomeBinding) :
@@ -41,5 +43,12 @@ class ProductAdapter(private val products: List<Product>, val onProductClicked: 
 
     override fun getItemCount(): Int {
         return products.size
+    }
+    fun setData(newProducts: List<Product>) {
+        val diffCallback = ProductDiffCallback(products, newProducts)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+        products = emptyList()
+        products = newProducts
+        diffResult.dispatchUpdatesTo(this)
     }
 }

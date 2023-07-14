@@ -9,41 +9,46 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.estore.databinding.FragmentProfileBinding
 import com.example.estore.storage.UserStorage
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_profile.logout
+import kotlinx.android.synthetic.main.layout_top_panel.actionIcon
+import kotlinx.android.synthetic.main.layout_top_panel.backIcon
+import kotlinx.android.synthetic.main.layout_top_panel.screenTitle
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class ProfileFragment : Fragment() {
 
-    private var binding: FragmentProfileBinding? = null
+    private lateinit var binding: FragmentProfileBinding
 
     @Inject
     lateinit var userStorage: UserStorage
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
-        return binding?.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        userStorage = UserStorage(requireContext())
-        binding?.let {
-            setUpTopPanel(it)
-            it.logout.setOnClickListener {
-                userStorage.clearActiveToken()
-                val action =
-                    ProfileFragmentDirections.actionProfileToLoginFragment()
-                findNavController().navigate(action)
-            }
+
+        setUpTopPanel()
+        setUpListeners()
+    }
+
+    private fun setUpListeners() {
+        logout.setOnClickListener {
+            userStorage.clearActiveToken()
+            val action = ProfileFragmentDirections.actionProfileToLoginFragment()
+            findNavController().navigate(action)
         }
     }
 
-    private fun setUpTopPanel(binding: FragmentProfileBinding) {
-        binding.topPanel.apply {
-            screenTitle.text = "Profile"
-            actionIcon.isVisible = false
-            backIcon.isVisible = false
-        }
+    private fun setUpTopPanel() {
+        screenTitle.text = "Profile"
+        actionIcon.isVisible = false
+        backIcon.isVisible = false
     }
 }
