@@ -41,7 +41,7 @@ Welcome to the E-Store App project! This open-source Android app allows users to
 
 **API Provider**
 
-The app utilizes the API provided by **[Fake Store API]([url](https://fakestoreapi.com/))** :  to fetch product data and perform various e-commerce operations.
+The app utilizes the API provided by **Fake Store API** link: https://fakestoreapi.com/ to fetch product data and perform various e-commerce operations.
 
 **Design**
 
