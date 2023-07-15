@@ -10,12 +10,12 @@
         android:icon="@drawable/ic_fav"
         android:title="@string/favorite" />
     <item
-        android:id="@+id/profile"
+        android:id="@+id/profileFragment"
         android:contentDescription="@string/profile"
         android:icon="@drawable/ic_profile"
         android:title="@string/profile" />
     <item
-        android:id="@+id/cart"
+        android:id="@+id/cartFragment"
         android:contentDescription="@string/cart"
         android:icon="@drawable/ic_cart"
         android:title="@string/cart" />

@@ -1,14 +1,18 @@
 package com.example.estore.ui.splash
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
+import com.example.estore.MainActivity
+import com.example.estore.UserActivityVM
 import com.example.estore.databinding.FragmentSplashBinding
 import com.example.estore.storage.UserStorage
 import kotlinx.coroutines.delay
@@ -20,8 +24,7 @@ class SplashScreen : Fragment() {
     var binding: FragmentSplashBinding? = null
     private val directionToLoginFragment =
         SplashScreenDirections.actionSplashScreen2ToLoginFragment2()
-    private val directionToHomeFragment =
-        SplashScreenDirections.actionSplashScreenToHome2()
+    private val userActivityVM: UserActivityVM by activityViewModels()
 
     @Inject
     lateinit var userStorage: UserStorage
@@ -44,7 +47,9 @@ class SplashScreen : Fragment() {
                     text.visibility = View.INVISIBLE
                 }
                 if (userStorage.getActiveToken() != null) {
-                    navigate(directionToHomeFragment)
+                    val intent = Intent(context, MainActivity::class.java)
+                    requireActivity().startActivity(intent)
+                    requireActivity().finish()
                 } else {
                     navigate(directionToLoginFragment)
                 }
@@ -58,9 +63,8 @@ class SplashScreen : Fragment() {
 
     private fun navigate(direction: NavDirections) {
         lifecycleScope.launch {
-            delay(2000L)
-            val action =
-                findNavController().navigate(direction)
+            if (!userActivityVM.showLoginFragment) delay(2000L)
+            findNavController().navigate(direction)
         }
     }
 }

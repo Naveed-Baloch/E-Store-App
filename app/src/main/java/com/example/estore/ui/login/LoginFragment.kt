@@ -1,5 +1,6 @@
 package com.example.estore.ui.login
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.estore.MainActivity
 import com.example.estore.common.Result
 import com.example.estore.common.alert
 import com.example.estore.data.model.Token
@@ -78,9 +80,9 @@ class LoginFragment : Fragment() {
                             updateLoadState(true)
                             val data = result.data
                             if (data is Token) {
-                                // Handle success
-                                val action = LoginFragmentDirections.actionLoginFragment2ToHomeFragment()
-                                findNavController().navigate(action)
+                                val intent = Intent(context, MainActivity::class.java)
+                                requireActivity().startActivity(intent)
+                                requireActivity().finish()
                             } else {
                                 // Unexpected data type
                                 updateLoadState(false)

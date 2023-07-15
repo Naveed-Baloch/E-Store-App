@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.estore.R
@@ -87,9 +88,10 @@ class FavFragment : Fragment() {
                 emptyScreenDesc.text = "Hit the orange button down\n below to Create an order"
                 emptyScreenBtnTxt.text = "Start Ordering!"
                 emptyScreenBtn.setOnClickListener {
-                    val directionToHomePage =
-                        FavFragmentDirections.actionFavoriteToHome()
-                    findNavController().navigate(directionToHomePage)
+                    val navOptions = NavOptions.Builder()
+                        .setPopUpTo(R.id.home, true)
+                        .build()
+                    findNavController().navigate(R.id.home, null, navOptions)
                 }
             }
         }

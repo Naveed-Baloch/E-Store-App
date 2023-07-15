@@ -3,12 +3,14 @@ package com.example.estore
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import com.example.estore.databinding.ActivityMainBinding
+import com.example.estore.ui.login.LoginVM
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

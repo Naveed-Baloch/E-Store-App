@@ -2,33 +2,8 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
-    app:startDestination="@id/splashScreen">
-    <fragment
-        android:id="@+id/splashScreen"
-        android:name="com.example.estore.ui.splash.SplashScreen"
-        android:label="fragment_splash"
-        tools:layout="@layout/fragment_splash">
-        <action
-            android:id="@+id/action_splashScreen2_to_loginFragment2"
-            app:destination="@id/loginFragment"
-            app:popUpTo="@+id/splashScreen"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_splashScreen_to_home2"
-            app:destination="@id/home" />
-    </fragment>
-    <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.example.estore.ui.login.LoginFragment"
-        android:label="fragment_login"
-        tools:layout="@layout/fragment_login">
-        <action
-            android:id="@+id/action_loginFragment2_to_homeFragment"
-            app:destination="@id/home"
-            app:popUpTo="@+id/loginFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
+    app:startDestination="@id/home"
+    android:id="@+id/nav_graph">
     <fragment
         android:id="@+id/home"
         android:name="com.example.estore.ui.home.HomeFragment"
@@ -37,6 +12,9 @@
         <action
             android:id="@+id/action_home_to_productDetail"
             app:destination="@id/productDetail" />
+        <action
+            android:id="@+id/action_home_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -46,18 +24,6 @@
         <action
             android:id="@+id/action_searchFragment_to_productDetail"
             app:destination="@id/productDetail" />
-    </fragment>
-    <fragment
-        android:id="@+id/profile"
-        android:name="com.example.estore.ui.profile.ProfileFragment"
-        android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile">
-        <action
-            android:id="@+id/action_profileFragment_to_cartFragment"
-            app:destination="@id/cart" />
-        <action
-            android:id="@+id/action_profile_to_loginFragment"
-            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/favorite"
@@ -71,10 +37,6 @@
             app:destination="@id/home" />
     </fragment>
     <fragment
-        android:id="@+id/cart"
-        android:name="com.example.estore.ui.cart.CartFragment"
-        android:label="CartFragment" />
-    <fragment
         android:id="@+id/productDetail"
         android:name="com.example.estore.ui.product_detail.ProductDetail"
         android:label="fragment_product_detail"
@@ -83,4 +45,13 @@
             android:name="product"
             app:argType="com.example.estore.data.model.Product" />
     </fragment>
+    <fragment
+        android:id="@+id/cartFragment"
+        android:name="com.example.estore.ui.cart.CartFragment"
+        android:label="CartFragment" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.estore.ui.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>

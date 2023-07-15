@@ -1,12 +1,14 @@
 package com.example.estore.ui.profile
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
+import com.example.estore.MainActivity
+import com.example.estore.UserActivity
 import com.example.estore.databinding.FragmentProfileBinding
 import com.example.estore.storage.UserStorage
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,8 +43,10 @@ class ProfileFragment : Fragment() {
     private fun setUpListeners() {
         logout.setOnClickListener {
             userStorage.clearActiveToken()
-            val action = ProfileFragmentDirections.actionProfileToLoginFragment()
-            findNavController().navigate(action)
+            val intent = Intent(context, UserActivity::class.java)
+            intent.putExtra("showLoginFragment", true) // Set the value to true or false as needed
+            requireActivity().startActivity(intent)
+            requireActivity().finish()
         }
     }
 
