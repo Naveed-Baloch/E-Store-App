@@ -45,13 +45,13 @@ class SplashScreen : Fragment() {
                 if (!userStorage.isFirstTime) {
                     getStarted.visibility = View.INVISIBLE
                     text.visibility = View.INVISIBLE
-                }
-                if (userStorage.getActiveToken() != null) {
-                    val intent = Intent(context, MainActivity::class.java)
-                    requireActivity().startActivity(intent)
-                    requireActivity().finish()
-                } else {
-                    navigate(directionToLoginFragment)
+                    if (userStorage.getActiveToken() != null) {
+                        val intent = Intent(context, MainActivity::class.java)
+                        requireActivity().startActivity(intent)
+                        requireActivity().finish()
+                    } else {
+                        navigate(directionToLoginFragment)
+                    }
                 }
                 getStarted.setOnClickListener {
                     userStorage.isFirstTime = false
@@ -63,7 +63,6 @@ class SplashScreen : Fragment() {
 
     private fun navigate(direction: NavDirections) {
         lifecycleScope.launch {
-            if (!userActivityVM.showLoginFragment) delay(2000L)
             findNavController().navigate(direction)
         }
     }
