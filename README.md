@@ -67,3 +67,5 @@ let's shine the project together 🙌🎉
 
 For any inquiries or questions, please reach out to naveed32001@gmail.com. 📩
 
+[E-store  Android app .pdf](https://github.com/Naveed-Baloch/E-Store-App/files/12062072/E-store.Android.app.pdf)
+
